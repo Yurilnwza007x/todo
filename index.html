@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loy KraTong 🌕🌸</title>
+    
+    <!-- CSS & Framework Link -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;600&family=Prompt:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 relative">
+
+    <!-- Background Elements -->
+    <div class="moon pointer-events-none"></div>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-sm mx-auto relative z-10">
+        
+        <!-- STEP 1: INVITATION CARD -->
+        <div id="card-step-1" class="glass-card rounded-3xl p-6 text-center text-white">
+            <div class="w-32 h-32 mx-auto mb-4 rounded-2xl overflow-hidden border-2 border-pink-300/40 shadow-md">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2VvdDAyM245dTFvbzVtenFhcmhoOWFndzFiY2k5bTRwYTJ1dG9zYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Fu3OjBQiCs3s0ZuLY3/giphy.gif" class="w-full h-full object-cover">
+            </div>
+
+            <h1 class="text-2xl font-bold font-mitr text-amber-200 mb-2">
+                ໄປລອຍກະທົງນຳກັນບໍ່?<br>
+            </h1>
+            <div class="flex items-center justify-center gap-3 relative min-h-[90px] w-full">
+                <button id="btnYes" onclick="handleYesClick()" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 text-white font-bold text-base shadow-lg">
+                    ໄປ! 💖
+                </button>
+                <button id="btnNo" class="flex-1 py-3 px-4 rounded-xl bg-slate-700/80 text-black-200 font-semibold text-sm border border-white/20">
+                    ບໍ່ວ່າງອ່ະ 😢
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 2: APPOINTMENT FORM -->
+        <div id="card-step-2" class="glass-card rounded-3xl p-6 text-white hidden opacity-0">
+            <h2 class="text-xl font-bold font-mitr text-amber-200 text-center mb-4">ນັດວັນເວລາ ເເລະ ສະຖານທີ່ ⏰</h2>
+            
+            <form id="bookingForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-pink-200 mb-1">ວັນທີ</label>
+                    <input type="text" id="inputDate" value="26/10/2026" readonly class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/90 border border-amber-400/50 text-amber-200 font-semibold text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-pink-200 mb-1">ເວລານັດ</label>
+                    <input type="time" id="inputTime" required value="19:30" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/60 border border-pink-300/30 text-white text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-pink-200 mb-1">ສະຖານທີ່ນັດພົບ (ໃສ່ຂໍ້ຄວາມ)</label>
+                    <input type="text" id="inputLocation" required placeholder="ພິມສະຖານທີ່ຢາກໄປ..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/60 border border-pink-300/30 text-white text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-pink-200 mb-1">ຂໍ້ຄວາມເພີ່ມເຕີມ</label>
+                    <textarea id="inputNote" rows="2" placeholder="ຢາກເຮັດຫຍັງເປັນພິເສດບໍ່..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/60 border border-pink-300/30 text-white text-sm resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-green-400 to-cyan-500 text-slate-900 font-bold text-base">
+                    ບັນທຶກ 🎫✨
+                </button>
+            </form>
+        </div>
+
+        <!-- STEP 3: SUMMARY TICKET CARD -->
+        <div id="card-step-3" class="glass-card rounded-3xl p-6 text-white hidden opacity-0">
+            <h2 class="text-xl font-bold font-mitr text-amber-200 text-center mb-4">ຂໍ້ມູນນັດລອຍກະທົງ! 🎉</h2>
+            
+            <div class="bg-slate-900/90 rounded-2xl p-4 border border-amber-300/40 mb-4 text-xs space-y-2">
+                <div><b>ວັນທີ:</b> <span id="ticketDate">26/10/2026</span></div>
+                <div><b>ເວລາ:</b> <span id="ticketTime">19:30</span></div>
+                <div><b>ສະຖານທີ່:</b> <span id="ticketLocation">-</span></div>
+                <div id="ticketNoteRow"><b>ຂໍ້ຄວາມ:</b> <span id="ticketNote">-</span></div>
+            </div>
+
+            <button onclick="copySummaryText()" class="w-full py-2.5 rounded-xl bg-pink-500/30 border border-pink-400/50 text-pink-100 text-xs font-semibold">
+                📋 ຄັດລອກຂໍ້ຄວາມວັນນັດລອຍກະທົງ
+            </button>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
