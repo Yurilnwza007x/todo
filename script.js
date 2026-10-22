@@ -1,8 +1,7 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     const btnNo = document.getElementById('btnNo');
 
-    // พฤติกรรมปุ่ม No: เลื่อนหนีอย่างเดียวเมื่อชี้หรือแตะ
+    // No button behavior: moves away on hover or touch
     btnNo.addEventListener('mouseover', moveNoButton);
     btnNo.addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -14,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// ฟังก์ชันคำนวณตำแหน่งสุ่มให้ปุ่ม No เลื่อนหนี
+// Function to calculate random position for No button to dodge
 function moveNoButton() {
     const btnNo = document.getElementById('btnNo');
     const padding = 20;
@@ -33,9 +32,9 @@ function moveNoButton() {
     btnNo.style.zIndex = '50';
 }
 
-// เมื่อกดปุ่ม YES
+// When YES button is clicked
 function handleYesClick() {
-    // จุดพลุกระดาษฉลอง
+    // Confetti celebration
     if (typeof confetti === 'function') {
         confetti({
             particleCount: 70,
@@ -45,7 +44,7 @@ function handleYesClick() {
         });
     }
 
-    // สลับไปยังหน้าฟอร์มนัดหมาย (Step 1 -> Step 2)
+    // Switch to appointment form (Step 1 -> Step 2)
     const card1 = document.getElementById('card-step-1');
     const card2 = document.getElementById('card-step-2');
 
@@ -58,7 +57,7 @@ function handleYesClick() {
     }, 300);
 }
 
-// เมื่อส่งฟอร์มนัดหมาย
+// When form is submitted
 function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -67,10 +66,10 @@ function handleFormSubmit(event) {
     const locationVal = document.getElementById('inputLocation').value.trim();
     const noteVal = document.getElementById('inputNote').value.trim();
 
-    // เติมข้อมูลลงตั๋วนัด
-    document.getElementById('ticketDate').textContent = dateVal; // 25/10/2026
-    document.getElementById('ticketTime').textContent = `${timeVal} น.`;
-    document.getElementById('ticketLocation').textContent = locationVal || 'สถานที่นัดหมายของเรา';
+    // Fill ticket details
+    document.getElementById('ticketDate').textContent = dateVal; // 26/10/2026
+    document.getElementById('ticketTime').textContent = timeVal;
+    document.getElementById('ticketLocation').textContent = locationVal || 'Our meeting spot';
 
     const noteRow = document.getElementById('ticketNoteRow');
     if (noteVal) {
@@ -80,7 +79,7 @@ function handleFormSubmit(event) {
         noteRow.classList.add('hidden');
     }
 
-    // สลับไปยังหน้าตั๋วนัดสรุป (Step 2 -> Step 3)
+    // Switch to summary ticket (Step 2 -> Step 3)
     const card2 = document.getElementById('card-step-2');
     const card3 = document.getElementById('card-step-3');
 
@@ -93,18 +92,18 @@ function handleFormSubmit(event) {
     }, 300);
 }
 
-// คัดลอกข้อความสรุปนัดหมายไปส่งแชท
+// Copy summary text to clipboard for chat
 function copySummaryText() {
     const date = document.getElementById('ticketDate').textContent;
     const time = document.getElementById('ticketTime').textContent;
     const location = document.getElementById('ticketLocation').textContent;
     const note = document.getElementById('ticketNote').textContent;
 
-    let summary = `🌕 นัดลอยกระทงของเราสองคน ✨\n📅 วันที่: ${date}\n⏰ เวลา: ${time}\n📍 สถานที่: ${location}`;
+    let summary = `🌕 Our Loy Krathong Date ✨\n📅 Date: ${date}\n⏰ Time: ${time}\n📍 Location: ${location}`;
     if (note && note !== '-') {
         summary += `\n💬 Note: ${note}`;
     }
-    summary += `\n\nเจอกันน้า! 💕🪷`;
+    summary += `\n\nSee you! 💕🪷`;
 
     const tempInput = document.createElement('textarea');
     tempInput.value = summary;
@@ -113,5 +112,5 @@ function copySummaryText() {
     document.execCommand('copy');
     document.body.removeChild(tempInput);
 
-    alert('คัดลอกข้อความสรุปนัดหมายเรียบร้อยแล้ว!');
+    alert('Date summary copied to clipboard!');
 }
